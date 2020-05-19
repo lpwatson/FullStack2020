@@ -2,24 +2,24 @@ browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
 
 note over server:
 server runs code to add the new note to the notes array
-the responds with a redirect
-end note 
+then responds with a redirect
+end note
 
 server->browser: 302 response redirects to /notes
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
-server-->browser: HTML-code
+server-->browser: server returns the html code
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
-server-->browser: main.css
+server-->browser: server returns main.css
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
-server-->browser: main.js
+server-->browser: server returns main.js
 
 note over browser:
-browser starts executing js-code
-that requests JSON data from server
+browser executes js-code
+and requests the JSON data from the server
 end note
 
 browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
-server-->browser: [{ content: "HTML is easy", date: "2019-05-23" }, ...]
+server-->browser: responds with the list of notes in json format
 
 note over browser:
 browser executes the event handler

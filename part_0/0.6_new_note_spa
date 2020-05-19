@@ -1,0 +1,7 @@
+note over browser:
+when the user enters a new note and clicks submit
+the browser runs spa.js to update the list of notes and then send the new note to the browser
+end note
+
+browser->server: HTTP POST browser->server: https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server->browser: responds with a 201 Created
