@@ -10,17 +10,28 @@ const Button = (props) => (
 const App = (props) => {
   const [selected, setSelected] = useState(0)
 
+  const points = new Array(anecdotes.length).fill(0)
+
+  const [ copy, setCopy ] = useState(points)
+
   return (
     <>
       <div>
         {props.anecdotes[selected]}
+        <p>has {copy[selected]} votes</p>
       </div>
       <div>
+      <Button handleClick={() => {
+            const clone = [...copy];
+            clone[selected] += 1;
+            setCopy(clone);
+        }} text="vote" />
         <Button handleClick={ () => setSelected(Math.floor(Math.random() * (anecdotes.length - 1))) } text="next anecdote" />
       </div>
     </>
   )
 }
+
 
 const anecdotes = [
   'If it hurts, do it more often',
