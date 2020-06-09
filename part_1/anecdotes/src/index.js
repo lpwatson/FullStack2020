@@ -17,6 +17,7 @@ const App = (props) => {
   return (
     <>
       <div>
+        <h1>Anecdote of the day</h1>
         {props.anecdotes[selected]}
         <p>has {copy[selected]} votes</p>
       </div>
@@ -27,6 +28,11 @@ const App = (props) => {
             setCopy(clone);
         }} text="vote" />
         <Button handleClick={ () => setSelected(Math.floor(Math.random() * (anecdotes.length - 1))) } text="next anecdote" />
+      </div>
+      <div>
+        <h1>Anecdote with the most votes</h1>
+        {props.anecdotes[copy.indexOf(Math.max(...copy))]}
+        <p>has {Math.max(...copy)} votes</p>
       </div>
     </>
   )
