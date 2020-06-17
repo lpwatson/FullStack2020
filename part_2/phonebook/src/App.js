@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Persons from'./components/Persons';
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -43,7 +46,7 @@ const App = () => {
 
   useEffect(() => {
     const results = persons.filter(person =>
-      person.name.toLowerCase().includes(newSearchName));
+      person.name.toLowerCase().includes(newSearchName.toLowerCase()));
       setSearchResults(results)
   }, [persons,newSearchName]);
 
@@ -52,41 +55,18 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        <p>
-          filter shown with <input
-            type="search"
-            value={newSearchName}
-            onChange={handleSearchChange}
-          />
-        </p>
-      </div>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input
-              value={newName}
-              onChange={handleNameChange}
-            />
-        </div>
-        <div>
-          number: <input
-              value={newNumber}
-              onChange={handleNumberChange}
-            />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter
+        newSearchName={newSearchName}
+        handleSearchChange={handleSearchChange}
+      />
+      <PersonForm
+        addPerson={addPerson}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}  />
       <h2>Numbers</h2>
-      <ul>
-        {searchResults.map(person =>
-          <li key={person.name}>{person.name} {person.number}</li>
-        )}
-      </ul>
+      <Persons searchResults={searchResults} />
     </div>
-
   )
-
 }
 export default App;
