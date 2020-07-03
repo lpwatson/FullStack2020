@@ -19,7 +19,7 @@ const App = () => {
       .then(response => {
         setCountries(response.data)
       })
-  })
+  },[])
 
   useEffect(() => {
     const results = countries.filter(country =>
@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div>
       <Filter searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
-      <Countries searchResults={searchResults} />
+      <Countries searchResults={searchResults} setSearchResults={setSearchResults} />
     </div>
   )
 }
