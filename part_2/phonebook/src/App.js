@@ -27,17 +27,31 @@ const App = () => {
       number: newNumber
     }
 
-    if (persons.find( person => { return JSON.stringify(person) === JSON.stringify(personObject)} ) ) {
+    if (persons.find( person => { return person.name === personObject.name } ) ) {
       window.alert(`${personObject.name} is already added to phonebook`)
     }
     else {
       personService
       .create(personObject)
-      .then(returnedPerson => {
-        setPersons(persons.concat(personObject))
-        setNewName('')
-      })
+      .then(response => personService
+        .getAll()
+        .then(allPersons => {
+          setPersons(allPersons)
+        }),
+
+        setNewName(''),
+        setNewNumber('')
+      )
     }
+  }
+
+  const deletePerson = (person) => {
+    window.confirm(`Delete ${person.name} ?`)
+    personService
+    .deleteRecord(person.id)
+    .then(response => {
+      setPersons(persons.filter(p => p.id !== person.id))
+    })
   }
 
   const handleNameChange = (event) => {
@@ -68,11 +82,12 @@ const App = () => {
       />
       <PersonForm
         addPerson={addPerson}
+        newName={newName}
         handleNameChange={handleNameChange}
         newNumber={newNumber}
         handleNumberChange={handleNumberChange}  />
       <h2>Numbers</h2>
-      <Persons searchResults={searchResults} />
+      <Persons searchResults={searchResults} deletePerson={deletePerson} />
     </div>
   )
 }
