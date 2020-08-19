@@ -13,6 +13,7 @@ const App = () => {
   const [ newSearchName, setNewSearchName ] = useState('')
   const [ searchResults, setSearchResults ] = useState([])
   const [ notificationMessage, setNotificationMessage ] = useState(null)
+  const [ messageType, setMessageType ] = useState("success")
 
   useEffect(() => {
     personService
@@ -48,6 +49,13 @@ const App = () => {
           setNotificationMessage(null)
         }, 5000)
       )
+      .catch(error => {
+        setMessageType("error")
+        setNotificationMessage(`Information for ${personObject.name} has already been removed from server`)
+      })
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     }
     else {
       personService
@@ -75,6 +83,13 @@ const App = () => {
     .then(response => {
       setPersons(persons.filter(p => p.id !== person.id))
     })
+    .catch(error => {
+      setMessageType("error")
+      setNotificationMessage(`Information for ${person.name} has already been removed from server`)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
+    })
   }
 
   const handleNameChange = (event) => {
@@ -99,7 +114,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notificationMessage} />
+      <Notification messageType={messageType} message={notificationMessage} />
       <Filter
         newSearchName={newSearchName}
         handleSearchChange={handleSearchChange}
